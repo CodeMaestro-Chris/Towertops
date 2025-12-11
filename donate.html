@@ -102,28 +102,63 @@
         </div>
       
         <form id="donationForm" class="p-4 bg-light rounded shadow-sm">
-          <div class="row g-3">
+          <h3 class="my-4">Kindly Donate To These Accounts</h3>
+          <div class="row mb-5 g-4 pt-4">
+            <i>For International Transfers</i>
+            <div class="col-md-6 col-12">
+              <p class="fw-bold primary-text">ACCOUNT NUMBER:</p>
+              <h2>4460 5859 5118</h2>
+            </div>
+            <div class="col-md-6 col-12">
+              <p class="fw-bold primary-text">ROUTING NUMBER:</p>
+              <h2>052 001 633</h2>
+            </div>
+            <div class="col-md-6 col-12">
+              <p class="fw-bold primary-text">WIRES:</p>
+              <h2>026 009 593</h2>
+            </div>
+          </div>
+
+          <div class="row mb-5 g-4 pt-4">
+            <i>For Nigerian Transfers</i>
+            <div class="col-md-12 col-12">
+              <p class="fw-bold primary-text">ACCOUNT NAME:</p>
+              <h2>TOWERTOPS CHRISTIAN CENTER</h2>
+            </div>
+            <div class="col-md-6 col-12">
+              <p class="fw-bold primary-text">ACCOUNT NUMBER:</p>
+              <h2>1014 461 612</h2>
+            </div>
+            <div class="col-md-6 col-12">
+              <p class="fw-bold primary-text">BANK NAME:</p>
+              <h2>ZENITH BANK PLC</h2>
+            </div>
+          </div>
+          <hr>
+          <!-- Donation Form -->
+          <div class="row g-3 mt-5 mb-4">
+            <h3>Please Fill The Form Below</h3>
             <div class="col-md-6">
-              <div class="form-floating">
-                <input type="text" class="form-control" id="donorName" placeholder="Your Full Name" required>
-                <label for="donorName">Full Name</label>
+              <div class="form-floatig">
+                <label for="donorName" class="primary-text fw-bold fs-6 mb-2">YOUR NAME</label>
+                <input type="text" class="form-control p-3" id="donorName" placeholder="Your Full Name" required>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-floating">
-                <input type="number" class="form-control" id="amount" placeholder="Donation Amount (USD)" required>
-                <label for="amount">Donation Amount (USD)</label>
+              <div class="">
+                <label for="amount" class="primary-text fw-bold fs-6 mb-2">DONATION AMOUNT</label>
+                <input type="number" class="form-control p-3" id="amount" placeholder="Donation Amount" required>
               </div>
             </div>
-            <div class="col-12">
-              <div class="form-floating">
-                <input type="text" class="form-control" id="accountDetails" placeholder="Your Account Details (Bank Name / Account No.)" required>
-                <label for="accountDetails">Account Details</label>
+            <div class="col-12 mt-4">
+              <div class="">
+                <label for="accountDetails" class="primary-text fw-bold fs-6 mb-2">ACCOUNT DETAILS</label>
+                <input type="text" class="form-control p-3" id="accountDetails" placeholder="Your Account Details (Bank Name & Account No.)" required>
               </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mt-4">
               <button type="submit" class="btn btn-primary py-2 px-4">
-                Donate Now
+                Submit
                 <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                   <i class="fa fa-arrow-right"></i>
                 </div>

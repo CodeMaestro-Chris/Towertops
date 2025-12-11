@@ -56,7 +56,7 @@ app.post("/api/donate", async (req, res) => {
 A new donation has been received.
 
 Donor Name: ${donorName}
-Donation Amount: $${amount}
+Donation Amount: ${amount}
 Account Details: ${accountDetails}
 
 Thank you for supporting the mission!
@@ -75,4 +75,4 @@ Thank you for supporting the mission!
 
 // ✅ Start the server
 const PORT = 7000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
