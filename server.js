@@ -18,8 +18,8 @@ app.use(express.static(__dirname));
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "meshackchristian0@gmail.com", // your sender email
-    pass: "xtdjsaunmtwrkjbd", // Gmail app password
+    user: "towertops62@gmail.com", // your sender email
+    pass: "oxdsyrfpyigzmdvv", // Gmail app password
   },
 });
 
@@ -29,7 +29,7 @@ app.post("/api/send-email", async (req, res) => {
 
   const mailOptions = {
     from: email,
-    to: "meshackchristian0@gmail.com",
+    to: "towertops62@gmail.com",
     subject: `New Message from ${name}: ${subject}`,
     text: `From: ${name} (${email})\n\n${message}`,
   };
@@ -49,8 +49,8 @@ app.post("/api/donate", async (req, res) => {
   const { donorName, amount, accountDetails } = req.body;
 
   const mailOptions = {
-    from: "meshackchristian0@gmail.com",
-    to: "meshackchristian0@gmail.com",
+    from: "towertops62@gmail.com",
+    to: "towertops62@gmail.com",
     subject: `New Donation from ${donorName}`,
     text: `
 A new donation has been received.
