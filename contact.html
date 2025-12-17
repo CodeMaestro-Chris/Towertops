@@ -300,7 +300,7 @@
           sendingModal.show();
       
           try {
-            const res = await fetch("https://towertops.onrender.com/api/send-email", {
+            const res = await fetch("http://localhost:7000/api/send-email", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name, email, subject, message }),

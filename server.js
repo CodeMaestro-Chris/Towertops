@@ -7,10 +7,8 @@ import { fileURLToPath } from "url";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: ['https://towertops.org', 'http://localhost:7000'],  // Replace with your actual cPanel domain; keep localhost for local testing
-  credentials: true  // If needed for cookies/auth
-}));
+app.use(cors());
+
 // ✅ Serve static frontend files
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
