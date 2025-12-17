@@ -3,11 +3,17 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: "*", // allow all domains (safe for now)
+  methods: ["GET", "POST"],
+}));
 
 // ✅ Serve static frontend files
 const __filename = fileURLToPath(import.meta.url);
@@ -18,8 +24,8 @@ app.use(express.static(__dirname));
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "towertops62@gmail.com", // your sender email
-    pass: "oxdsyrfpyigzmdvv", // Gmail app password
+    user: process.env.EMAIL_USER, // Sender's email
+    pass: process.env.EMAIL_PASS, // Gmail app password
   },
 });
 
@@ -75,4 +81,6 @@ Thank you for supporting the mission!
 
 // ✅ Start the server
 const PORT = 7000;
+console.log("EMAIL_USER loaded:", !!process.env.EMAIL_USER);
+console.log("EMAIL_PASS loaded:", !!process.env.EMAIL_PASS);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -285,7 +285,7 @@
           sendingModal.show();
       
           try {
-            const res = await fetch("http://localhost:7000/api/donate", { // https://towertops.onrender.com/api/donate
+            const res = await fetch("https://towertops2.onrender.com/api/donate", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ donorName, amount, accountDetails }),
