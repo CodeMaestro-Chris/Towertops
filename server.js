@@ -1,100 +1,82 @@
 import express from "express";
-import nodemailer from "nodemailer";
 import cors from "cors";
+import dotenv from "dotenv";
+import { Resend } from "resend";
 import path from "path";
 import { fileURLToPath } from "url";
-import dotenv from "dotenv";
 
 dotenv.config();
 
 const app = express();
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Middleware
+app.use(cors({
+  origin: "*",
+  methods: ["POST", "GET"],
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: "*", // allow all domains (safe for now)
-  methods: ["GET", "POST"],
-}));
 
-// ✅ Serve static frontend files
+// Serve static files
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(__dirname));
 
-// ✅ Gmail transporter setup
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     user: process.env.EMAIL_USER, // Sender's email
-//     pass: process.env.EMAIL_PASS, // Gmail app password
-//   },
-// });
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // MUST be false for port 587
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-  connectionTimeout: 10000, // 10 seconds
-});
-
-
-// ✅ Contact Form Endpoint
+/* =============================
+   CONTACT FORM
+============================= */
 app.post("/api/send-email", async (req, res) => {
   const { name, email, subject, message } = req.body;
 
-  const mailOptions = {
-    from: email,
-    to: "towertops62@gmail.com",
-    subject: `New Message from ${name}: ${subject}`,
-    text: `From: ${name} (${email})\n\n${message}`,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    console.log("Contact message sent successfully!");
-    res.status(200).send("Message sent successfully!");
+    await resend.emails.send({
+      from: "Towertops <onboarding@resend.dev>",
+      to: process.env.EMAIL_TO,
+      subject: `New Contact Message: ${subject}`,
+      html: `
+        <h3>New Contact Message</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p>${message}</p>
+      `,
+    });
+
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error sending contact message:", error);
-    res.status(500).send("Error sending contact message.");
+    console.error("Contact email error:", error);
+    res.status(500).json({ success: false });
   }
 });
 
-// ✅ Donation Form Endpoint
+/* =============================
+   DONATION FORM
+============================= */
 app.post("/api/donate", async (req, res) => {
   const { donorName, amount, accountDetails } = req.body;
 
-  const mailOptions = {
-    from: "towertops62@gmail.com",
-    to: "towertops62@gmail.com",
-    subject: `New Donation from ${donorName}`,
-    text: `
-A new donation has been received.
-
-Donor Name: ${donorName}
-Donation Amount: ${amount}
-Account Details: ${accountDetails}
-
-Thank you for supporting the mission!
-    `,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    console.log("✅ Donation email sent successfully!");
-    res.status(200).send("Donation recorded successfully!");
+    await resend.emails.send({
+      from: "Towertops Donations <onboarding@resend.dev>",
+      to: process.env.EMAIL_TO,
+      subject: "New Donation Notification",
+      html: `
+        <h2>New Donation Received</h2>
+        <p><strong>Donor Name:</strong> ${donorName}</p>
+        <p><strong>Amount:</strong> ₦${amount}</p>
+        <p><strong>Account Details:</strong> ${accountDetails}</p>
+      `,
+    });
+
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error sending donation email:", error);
-    res.status(500).send("Error sending donation email.");
+    console.error("Donation email error:", error);
+    res.status(500).json({ success: false });
   }
 });
 
-// ✅ Start the server
-const PORT = 7000;
-console.log("EMAIL_USER loaded:", !!process.env.EMAIL_USER);
-console.log("EMAIL_PASS loaded:", !!process.env.EMAIL_PASS);
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Start server
+const PORT = process.env.PORT || 7000;
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on port ${PORT}`)
+);
