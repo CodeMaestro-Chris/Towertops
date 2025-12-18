@@ -21,13 +21,27 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(__dirname));
 
 // ✅ Gmail transporter setup
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER, // Sender's email
+//     pass: process.env.EMAIL_PASS, // Gmail app password
+//   },
+// });
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // MUST be false for port 587
   auth: {
-    user: process.env.EMAIL_USER, // Sender's email
-    pass: process.env.EMAIL_PASS, // Gmail app password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false,
+  },
+  connectionTimeout: 10000, // 10 seconds
 });
+
 
 // ✅ Contact Form Endpoint
 app.post("/api/send-email", async (req, res) => {
